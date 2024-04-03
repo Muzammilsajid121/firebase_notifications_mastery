@@ -17,6 +17,7 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     notificationServices.requestNotificationPermission();  //requestNotificationPermission is our func
     notificationServices.isTokenRefresh();
+    notificationServices.setupInteractMessage(context);
     notificationServices.firebaseinit(context);
 
     notificationServices.getDeviceToken().then((value) =>
@@ -29,11 +30,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: const Text("Notifications"),
         centerTitle: true,
       ),
-      // body: Column(
-      //   children: [
-      //     Text("Hiii")
-      //   ],
-      // ),
+      
 
     );
   }

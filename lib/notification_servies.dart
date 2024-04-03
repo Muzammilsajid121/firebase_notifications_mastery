@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:firebase_notifications/message_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
@@ -63,6 +64,13 @@ class NotificationServices{
       }
         // print(message.notification!.title.toString());
         // print(message.notification!.body.toString());
+
+        //Print full data / payload
+        print(message.data.toString());
+        //Print specific data 
+        print(message.data['type']);
+        print(message.data['id']);
+
       });
     }
 
@@ -76,10 +84,12 @@ class NotificationServices{
       await _flutterLocalNotificationsPlugin.initialize(
         initializationSettings,
         onDidReceiveNotificationResponse: (payload){
+          //What to do when notification received
+          handleMessage(context, message);
         });
     } 
 
-        //4th func
+        //6th func
     Future <void> showNotifications(RemoteMessage message) async{
  
        AndroidNotificationChannel channel =  AndroidNotificationChannel(
@@ -97,7 +107,6 @@ class NotificationServices{
         ticker: "ticker"
     );    
 
-    //
     NotificationDetails notificationDetails = NotificationDetails(
       android: androidNotificationDetails
     );
@@ -111,8 +120,37 @@ class NotificationServices{
         );
      } );
      //
-
       }
+       
+    //7th function
+    void handleMessage(BuildContext context, RemoteMessage message){
+
+      // If user tap on notification redirect him to selected screen
+      if(message.data['type'] == 'msg'){
+        Navigator.push(context, MaterialPageRoute(builder: (context) => const MessageScreen()));
+      }
+
+    }
+
+    //7th function
+    Future<void> setupInteractMessage(BuildContext context) async{
+     
+     //When app is terminated
+     RemoteMessage? initialMesaage = await FirebaseMessaging.instance.getInitialMessage();
+      if(initialMesaage!= null){
+        handleMessage(context, initialMesaage);
+      }
+
+    //When app is in background
+    FirebaseMessaging.onMessageOpenedApp.listen((event) {
+        handleMessage(context, event);
+     });
+      
+
+    }
+
+
+
     }
     
 
