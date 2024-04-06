@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_notifications/firebase_options.dart';
 import 'package:firebase_notifications/homepage.dart';
+import 'package:firebase_notifications/message_screen.dart';
 import 'package:firebase_notifications/notification_servies.dart';
 import 'package:flutter/material.dart';
 

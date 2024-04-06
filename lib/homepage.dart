@@ -19,6 +19,7 @@ class _MyHomePageState extends State<MyHomePage> {
     notificationServices.isTokenRefresh();
     notificationServices.setupInteractMessage(context);
     notificationServices.firebaseinit(context);
+    notificationServices.storeNotificationToken();
 
     notificationServices.getDeviceToken().then((value) =>
     print("Device Token, $value"),);
@@ -27,8 +28,20 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return  Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.lightGreen,
         title: const Text("Notifications"),
         centerTitle: true,
+      ),
+      body: const Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+    Text("Wait some time you migth received notifcation from "),
+    Text("the developer😂."),
+    Text(" If you received it you are lucky🤗"),
+    Text(" and if not, you are unlucky😥")
+          ],
+        )
       ),
       
 

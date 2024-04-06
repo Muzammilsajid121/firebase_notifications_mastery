@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:math';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_notifications/message_screen.dart';
 import 'package:flutter/material.dart';
@@ -43,6 +44,7 @@ class NotificationServices{
     Future<String?> getDeviceToken() async{
       String? token = await messaging.getToken();
       return token;
+      
     }
 
     //3rd Function
@@ -145,9 +147,25 @@ class NotificationServices{
     FirebaseMessaging.onMessageOpenedApp.listen((event) {
         handleMessage(context, event);
      });
-      
-
     }
+
+    //8th Function
+    // 8th Function
+Future<void> storeNotificationToken() async {
+  String? token = await FirebaseMessaging.instance.getToken();
+  if (token != null) {
+    try {
+      await FirebaseFirestore.instance.collection('notifiedusers').doc('i5xAmzE4KCcx83CHuwSc').set({
+        'users': FieldValue.arrayUnion([token])
+      }, SetOptions(merge: true));
+      print('Notification token stored successfully.');
+    } catch (e) {
+      print('Error storing notification token: $e');
+    }
+  } else {
+    print('Failed to retrieve notification token.');
+  }
+}
 
 
 
