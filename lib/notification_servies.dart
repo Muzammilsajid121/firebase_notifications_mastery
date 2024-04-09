@@ -149,7 +149,6 @@ class NotificationServices{
      });
     }
 
-    //8th Function
     // 8th Function
 Future<void> storeNotificationToken() async {
   String? token = await FirebaseMessaging.instance.getToken();
@@ -166,6 +165,54 @@ Future<void> storeNotificationToken() async {
     print('Failed to retrieve notification token.');
   }
 }
+
+
+//    // 9th function
+// Future<void> sendNotificationsToAll() async {
+//   try {
+//     // Retrieve the document snapshot
+//     DocumentSnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance.collection('notifiedusers').doc('i5xAmzE4KCcx83CHuwSc').get();
+
+//     // Extract the 'users' field from the document data
+//     List<dynamic>? tokenList = snapshot.data()?['users'];
+//     if (tokenList != null) {
+//       List<String> tokens = List<String>.from(tokenList);
+
+//       // Send notifications via FCM
+//       if (tokens.isNotEmpty) {
+//         // Construct FCM payload
+//         Map<String, dynamic> notification = {
+//           'title': 'Your notification title',
+//           'body': 'Your notification body',
+//         };
+        
+//         Map<String, dynamic> data = {
+//           'type': 'msg', // Define your custom notification type if needed
+//           // Add any additional data you want to send with the notification
+//         };
+
+//         // Send notifications to each token
+//         for (String token in tokens) {
+//           await FirebaseMessaging.instance.send(
+//             {
+//               'notification': notification,
+//               'data': data,
+//               'token': token,
+//             },
+//           );
+//         }
+        
+//         print('Notifications sent to all devices.');
+//       } else {
+//         print('No tokens found in Firestore.');
+//       }
+//     } else {
+//       print('No users field found in Firestore document.');
+//     }
+//   } catch (e) {
+//     print('Error sending notifications: $e');
+//   }
+// }
 
 
 
